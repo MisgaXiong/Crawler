@@ -27,4 +27,5 @@ a<-as.vector(names(wo))
 for (i in 1:length(a)) {
   b<-c(b,length(wo[[i]]))
 }
-wordcloud2(b)
+wod<-data.frame(a,b)
+wordcloud2(wod)
