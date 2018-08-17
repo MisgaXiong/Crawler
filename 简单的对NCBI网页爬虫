@@ -1,0 +1,30 @@
+library(rvest)
+library(wordcloud2)
+url2<-"https://www.ncbi.nlm.nih.gov/nlmcatalog?term=currentlyindexed"
+PMC<-read_html(url2)
+Artical<-PMC%>%
+  html_nodes(css = ".title a")%>%
+  html_text()
+info<-PMC%>%
+  html_nodes(css = ".supp")%>%
+  html_text()
+chadata<-list()
+for (i in 1:length(Artical)) {
+  chadata[[Artical[i]]]<-info[i]
+}
+tetdata<-as.character(chadata)
+tedata<-strsplit(texdata,split=" ")[grepl(pattern = "[A-Za-z]+",strsplit(texdata,split=" "))]
+wo<-list()
+for (i in 1:length(tedata)) {
+  for(j in 1:length(tedata[[i]])){
+    wd<-tedata[[i]][j]
+    wo[[wd]]<-c(wo[[wd]],j)
+  }
+}
+wod<-data.frame()
+b<-NULL
+a<-as.vector(names(wo))
+for (i in 1:length(a)) {
+  b<-c(b,length(wo[[i]]))
+}
+wordcloud2(b)
